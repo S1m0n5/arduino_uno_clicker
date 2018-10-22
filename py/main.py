@@ -1,5 +1,5 @@
 from pynput.keyboard import Key, Controller
-import serial, time, os.path
+import serial, time, os.path, sys
 
 keyboard = Controller()
 
@@ -9,7 +9,10 @@ for i in range(0,20):
         arduino = serial.Serial(portaSeriale, 9600)
         break
     except Exception as e:
-        pass
+        if i == 19:
+            print("[!] An error is occurred, please disconnect and connect your Arduino again")
+            exit = input("Press ENTER key to exit...")
+            sys.exit()
 
 
 def main():
@@ -44,7 +47,10 @@ else:
     arduino.write("config".encode())
     command = []
     for i in range(0,4):
-
+        if i == 0:
+            print("Press LEFT button")
+        elif i == 2:
+            print("Press RIGHT button")
         output = arduino.readline()
         command.append(output)
         print(output.decode())
@@ -55,6 +61,7 @@ else:
     f = open("../config.txt","w")
     f.write("K:%s\nL:%s\nR:%s" % (k, left, right))
     f.close()
+    print("Configuration terminated")
     #REBOOT
     main()
 

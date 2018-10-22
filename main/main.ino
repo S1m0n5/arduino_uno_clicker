@@ -14,6 +14,7 @@ void setup() {
 
   pinMode(red, OUTPUT);
   pinMode(green, OUTPUT);
+  pinMode(blue, OUTPUT);
   Serial.begin(9600);
   irrecv.enableIRIn();
   digitalWrite(red,1);
@@ -27,6 +28,7 @@ void loop() {
     input = Serial.readStringUntil('\n');
     if(input == "main"){
     digitalWrite(red,LOW);
+    digitalWrite(blue, LOW);
     digitalWrite(green,HIGH);
     }
     if(input == "config"){
